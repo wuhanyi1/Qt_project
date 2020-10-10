@@ -20,7 +20,7 @@ void createConnection()
 bool is_exist_account(QString &account,QString &password){
     QSqlQuery query;
     QString str = QString("select passwd from login_info where id = '%1'").arg(account);
-    qDebug()<<str;
+   // qDebug()<<str;
     query.exec(str);
 
 
@@ -32,5 +32,23 @@ bool is_exist_account(QString &account,QString &password){
         QMessageBox::information(nullptr, "Wrong!", "密码错误!",  \
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     }
-    return true;
+    else return true;
+    return false;
 }
+
+QSqlQuery& inquire_stu_info(QString &account){
+    QSqlQuery *query=new QSqlQuery;
+    QString str=QString("select * from stu_info where id = '%1'").arg(account);
+    query->exec(str);
+
+    return *query;
+}
+
+QSqlQuery& inquire_stu_grade(QString &account){
+    QSqlQuery *query = new QSqlQuery;
+    QString str=QString("select * from grade_info where s_id = '%1'").arg(account);
+    query->exec(str);
+
+    return *query;
+}
+

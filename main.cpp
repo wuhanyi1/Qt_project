@@ -1,6 +1,7 @@
 #include "login_scene.h"
 #include <QApplication>
 #include "db_connect.h"
+#include "stu_info_scene.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,5 +11,7 @@ int main(int argc, char *argv[])
     w.show();
 
     createConnection();
+
+
     return a.exec();
 }

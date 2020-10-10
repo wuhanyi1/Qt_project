@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT += sql
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = manage_system
@@ -27,14 +28,17 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         login_scene.cpp \
-    db_connect.cpp
+    db_connect.cpp \
+    stu_info_scene.cpp
 
 HEADERS += \
         login_scene.h \
-    db_connect.h
+    db_connect.h \
+    stu_info_scene.h
 
 FORMS += \
-        login_scene.ui
+        login_scene.ui \
+    stu_info_scene.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

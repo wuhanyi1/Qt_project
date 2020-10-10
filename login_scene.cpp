@@ -1,6 +1,8 @@
 #include "login_scene.h"
 #include "ui_login_scene.h"
 #include "db_connect.h"
+#include "stu_info_scene.h"
+
 
 Login_scene::Login_scene(QWidget *parent) :
     QWidget(parent),my_timer(nullptr),VerificationCode(""),
@@ -67,13 +69,13 @@ void Login_scene::paintEvent(QPaintEvent *){//这个事件是系统自动调的�
     QBrush   brush( Qt::white );//设置画刷为白色
     painter.setBrush(brush); //画家拿起这种属性的画刷
 
-    painter.drawRect( QRect(365,186,90,21)); //
+    painter.drawRect( QRect(365,188,80,21)); //
 
 
     for(int i=0;i<4;i++){
         m_pen.setColor(m_color[i]);
         painter.setPen(m_pen);
-        painter.drawText(QRect(365 + 20 * i,186,90,21),static_cast<QChar>(VerificationCode[i]));//每次画出一个验证码
+        painter.drawText(QRect(370 + 20 * i,188,80,21),static_cast<QChar>(VerificationCode[i]));//每次画出一个验证码
     }
 
    // update();
@@ -87,14 +89,31 @@ void Login_scene::mousePressEvent(QMouseEvent *){
 
 void Login_scene::on_pushButton_clicked()
 {
-    QString account=ui->lineEdit->text();//获得输入框的账号文本
+    account=ui->lineEdit->text();//获得输入框的账号文本
     QString passwd=ui->lineEdit_2->text();//获得密码文本
     QString line_edit=ui->lineEdit_3->text();
+    bool succ_login=false;
     if(VerificationCode.toLower() != line_edit.toLower()){
         QMessageBox::critical(this,"错误","验证码错误!");//Message对话框输出错误信息
     }
     else {
-        is_exist_account(account,passwd);
+        succ_login = is_exist_account(account,passwd);
     }
-    VerificationCode=getRamdom();//再次切换验证码
+    if(!succ_login)
+        VerificationCode=getRamdom();//再次切换验证码
+    else {
+        if(ui->radioButton->isChecked()){//学生页面登录
+            stu_info_scene *stu=new stu_info_scene;
+
+            stu->set_bg(account);
+            stu->show();
+        }
+        this->close();//关闭本界面
+    }
 }
+
+/*int Login_scene::get_radio_choice(){
+    if(radio_check[0]) return 0;
+    else if(radio_check[1]) return 1;
+    else return 2;
+}*/

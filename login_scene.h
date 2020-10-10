@@ -8,6 +8,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QMessageBox>
+#include <QObject>
 
 
 namespace Ui {
@@ -25,14 +26,23 @@ public:
     QString getRamdom();//返回随机字符串的函数
     Qt::GlobalColor* getColors();//返回4个随机颜色数组的第一个元素的指针
     void mousePressEvent(QMouseEvent *);//重写鼠标单击事务
+    //int get_radio_choice();
+
 
     ~Login_scene();
 
 private:
+    QString account;
     QTimer *my_timer;//设置页面时间刷新频率和颜色刷新频率的计时器
     Qt::GlobalColor *m_color;//记录验证码每个字符的颜色
     QString VerificationCode;//记录产生的验证码
     Ui::Login_scene *ui;
+
+    //bool radio_check[3]={false,false,false};
+
+
+signals:
+
 
 private slots:
     void slottimedone();

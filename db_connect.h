@@ -12,5 +12,7 @@ static QSqlDatabase data_base;
 //创建一个默认的连接，即只有一个连接
 void createConnection();
 bool is_exist_account(QString &account,QString &password);
+QSqlQuery& inquire_stu_info(QString &account);
+QSqlQuery& inquire_stu_grade(QString &account);
 
 #endif // DB_CONNECTION_H
