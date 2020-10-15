@@ -43,8 +43,10 @@ void Login_scene::slottimedone(){
 QString Login_scene::getRamdom()//返回一串4个随机字符的字符串
 {
     QString ret = "";
+    qsrand(QTime::currentTime().msec());
     for(int i=0; i<4; i++)
     {
+
         int c = (qrand() % 2) ? 'a' : 'A';
 
         ret += static_cast<QChar>(c + qrand() % 26);

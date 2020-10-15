@@ -29,16 +29,19 @@ SOURCES += \
         main.cpp \
         login_scene.cpp \
     db_connect.cpp \
-    stu_info_scene.cpp
+    stu_info_scene.cpp \
+    course_op_scene.cpp
 
 HEADERS += \
         login_scene.h \
     db_connect.h \
-    stu_info_scene.h
+    stu_info_scene.h \
+    course_op_scene.h
 
 FORMS += \
         login_scene.ui \
-    stu_info_scene.ui
+    stu_info_scene.ui \
+    course_op_scene.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -14,21 +14,22 @@ void createConnection()
     data_base.setPassword("19970813");  //设置密码
     if(!data_base.open())
         qDebug()<<"failed to connect to mysql";
+    ::query=new QSqlQuery;
 
 }
 
 bool is_exist_account(QString &account,QString &password){
-    QSqlQuery query;
+    //QSqlQuery query;
     QString str = QString("select passwd from login_info where id = '%1'").arg(account);
    // qDebug()<<str;
-    query.exec(str);
+    query->exec(str);
 
 
-    if(!query.next()){
+    if(!query->next()){
         QMessageBox::information(nullptr, "Wrong!", "无此用户!",  \
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     }
-    else if(query.value(0).toString() != password){
+    else if(query->value(0).toString() != password){
         QMessageBox::information(nullptr, "Wrong!", "密码错误!",  \
                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     }
@@ -37,7 +38,7 @@ bool is_exist_account(QString &account,QString &password){
 }
 
 QSqlQuery& inquire_stu_info(QString &account){
-    QSqlQuery *query=new QSqlQuery;
+    //QSqlQuery *query=new QSqlQuery;
     QString str=QString("select * from stu_info where id = '%1'").arg(account);
     query->exec(str);
 
@@ -45,10 +46,57 @@ QSqlQuery& inquire_stu_info(QString &account){
 }
 
 QSqlQuery& inquire_stu_grade(QString &account){
-    QSqlQuery *query = new QSqlQuery;
+   // QSqlQuery *query = new QSqlQuery;
     QString str=QString("select * from grade_info where s_id = '%1'").arg(account);
     query->exec(str);
 
     return *query;
 }
 
+QSqlQuery& inquire_all_course_info(){
+    //QSqlQuery *query=new QSqlQuery;
+    QString str=QString("select * from course_info");
+    query->exec(str);
+
+    return *query;
+}
+
+QSqlQuery& inquire_special_course(QString &s1,QString &s2,QString &s3){
+   // QSqlQuery *query=new QSqlQuery;
+    QString str=QString("select * from course_info where (department_id='%1' and c_level ='%2' and c_teach_pos ='%3')").arg(s1).arg(s2).arg(s3);
+    qDebug()<<str;
+    query->exec(str);
+
+    return *query;
+}
+
+int inquire_remain_num(QString &course_id){
+    QString str=QString("select c_remain from course_info where c_id ='%1'").arg(course_id);
+    query->exec(str);
+    query->first();
+    return query->value(0).toInt();
+}
+
+int inquire_course_score(QString &c_id){
+    QString str=QString("select c_score from course_info where c_id ='%1'").arg(c_id);
+    query->exec(str);
+    query->first();
+    return query->value(0).toInt();
+}
+
+int inquire_stu_credit(QString &account){
+    QString str=QString("select s_credit from stu_info where id='%1'").arg(account);
+    query->exec(str);
+    query->first();
+    return query->value(0).toInt();
+}
+
+void update_course_num(QString &id,int num){
+    QString str=QString("update course_info set c_remain ='%2' where c_id ='%1'").arg(id).arg(num);
+    query->exec(str);
+}
+
+void update_stu_credit(QString &s_id,int num){
+    QString str=QString("update stu_info set s_credit ='%2' where id ='%1'").arg(s_id).arg(num);
+    query->exec(str);
+}

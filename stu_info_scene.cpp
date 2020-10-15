@@ -1,6 +1,7 @@
 #include "stu_info_scene.h"
 #include "ui_stu_info_scene.h"
 #include "db_connect.h"
+#include "course_op_scene.h"
 
 stu_info_scene::stu_info_scene(QWidget *parent) :
     QWidget(parent),
@@ -84,7 +85,10 @@ void stu_info_scene::grade_inquire(){
 }
 
 void stu_info_scene::elective_And_withdraw(){
-
+    course_op_scene *course =new course_op_scene;
+    course->set_bg(account);
+    course->show();
+    this->close();
 }
 
 void stu_info_scene::paintEvent(QPaintEvent *){
