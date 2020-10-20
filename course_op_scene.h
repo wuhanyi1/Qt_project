@@ -22,6 +22,7 @@ public:
     explicit course_op_scene(QWidget *parent = nullptr);
     void set_bg(QString &account);
     void set_widget_table(QSqlQuery &query);
+    void show_choosed_info();//显示学生已选课程信息
     ~course_op_scene();
 
 private slots:
@@ -30,6 +31,8 @@ private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_3_clicked();
+
+    void on_pushButton_4_clicked();
 
 private:
     QTableWidget *table1;

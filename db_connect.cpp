@@ -37,6 +37,13 @@ bool is_exist_account(QString &account,QString &password){
     return false;
 }
 
+bool is_exist_course(QString &c_id){
+    QString str=QString("select * from select_table where c_id='%1'").arg(c_id);
+    query->exec(str);
+    if(query->size()) return true;
+    else return false;
+}
+
 QSqlQuery& inquire_stu_info(QString &account){
     //QSqlQuery *query=new QSqlQuery;
     QString str=QString("select * from stu_info where id = '%1'").arg(account);
@@ -59,6 +66,12 @@ QSqlQuery& inquire_all_course_info(){
     query->exec(str);
 
     return *query;
+}
+
+QSqlQuery* inquire_stu_choosed_course(QString &c_id){
+    QString str=QString("select * from course_info where c_id ='%1'").arg(c_id);
+    query->exec(str);
+    return query;
 }
 
 QSqlQuery& inquire_special_course(QString &s1,QString &s2,QString &s3){
@@ -98,5 +111,25 @@ void update_course_num(QString &id,int num){
 
 void update_stu_credit(QString &s_id,int num){
     QString str=QString("update stu_info set s_credit ='%2' where id ='%1'").arg(s_id).arg(num);
+    query->exec(str);
+}
+
+void insert_select_info(QString &s_id,QString &c_id){//
+    QString str=QString("insert into select_table (s_id,c_id) values ('%1','%2')").arg(s_id).arg(c_id);
+    query->exec(str);
+}
+
+QList<QString> inquire_stu_select_info(QString &account){
+    QString str=QString("select c_id from select_table where s_id='%1'").arg(account);
+    query->exec(str);
+    QList<QString> list;
+    while (query->next()) {
+        list.push_back(query->value(0).toString());
+    }
+    return list;
+}
+
+void delete_select_record(QString &c_id){
+    QString str=QString("delete from select_table where c_id ='%1'").arg(c_id);
     query->exec(str);
 }
